@@ -1,47 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PFO 1</title>
+    <title>Alta de Usuario</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .form-container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 1.4rem;
+      }
+
+      label {
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: border 0.2s;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        border: none;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+    </style>
   </head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f3f4f6;
-      margin: 0;
-      padding: 0;
-    }
 
-    section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      color: white;
-      text-align: center;
-    }
+  <body>
+    <div class="form-container">
+      <h1>Alta de Usuario</h1>
 
-    h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
+      <form id="form-registro">
+        <label for="nombre">Nombre y Apellido:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez"/>
 
-    p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  
-  <section>
-    <div>
-      <h1>¡Hola, bienvenido!</h1>
-      <p>Gracias por visitar mi página web 🚀</p>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com"/>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required placeholder="Tu usuario único"/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Mínimo 8 caracteres"/>
+
+        <label for="confirm_password">Confirmar password:</label>
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          required
+          placeholder="Repite tu password"
+        />
+
+        <button type="submit">Registrarse</button>
+      </form>
     </div>
-  </section>
 
-</body>
+    <script>
+      const form = document.getElementById("form-registro");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // evita recargar la página
+
+        const formData = new FormData(form);
+
+        // Enviar al backend como JSON
+        const resp = await fetch("/registrar", {
+          method: "POST",
+          body: JSON.stringify(Object.fromEntries(formData)),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log("Enviado!");
+      });
+    </script>
+  </body>
 </html>
